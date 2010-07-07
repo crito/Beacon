@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-      package="net.thirtyloops.hitchhiking.beacon"
-      android:versionCode="1"
-      android:versionName="1.0">
+      package="net.thirtyloops.hitchhiking.beacon">
+    
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+      
     <application android:icon="@drawable/icon" android:label="@string/app_name">
         <activity android:name=".Beacon"
                   android:label="@string/app_name">
@@ -11,7 +12,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
+    
     </application>
 
 

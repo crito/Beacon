@@ -16,7 +16,7 @@ public class Beacon extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
+        //setContentView(R.layout.main);
         
         //---- Obtain GPS location
         lm = (LocationManager)
@@ -34,12 +34,12 @@ public class Beacon extends Activity {
     private class MyLocationListener implements LocationListener
     {
     	public void onLocationChanged(Location loc) {
-    		/*if (loc != null) {
+    		if (loc != null) {
     			Toast.makeText(getBaseContext(), 
     					"Location changed: Lat: " + loc.getLatitude() + 
     					" Lng: " + loc.getLongitude(), 
     					Toast.LENGTH_SHORT).show();
-    		}*/
+    		}
     	}
     	public void onProviderDisabled(String provider) {
     		//TODO
