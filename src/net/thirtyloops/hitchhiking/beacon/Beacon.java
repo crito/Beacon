@@ -2,12 +2,17 @@ package net.thirtyloops.hitchhiking.beacon;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+
 import java.io.IOException;
 import java.lang.String;
 import java.net.URI;
@@ -21,97 +26,35 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.entity.ByteArrayEntity;
 
 
-public class Beacon extends Activity {
+public class Beacon extends Activity implements OnClickListener {
 	private final String TAG = "Beacon";
 	
-	private LocationManager lm;
-	private LocationListener locationListener;
-	
-	//private OnClickListener mCorkyListener = new OnClickListener() {
-	//    public void onClick(View v) {
-	      // do something when the button is clicked
-	//    }
-	//};
-
-    /** Called when the activity is first created. */
+	Button startButton, stopButton;
+	/** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
     	Log.v(TAG, TAG + " started");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         
-        // Obtain GPS location updates and connect it to a callback class locationListener.
-        lm = (LocationManager)
-        	getSystemService(Context.LOCATION_SERVICE);
+        startButton = (Button) findViewById(R.id.startButton);
+        startButton = (Button) findViewById(R.id.stopButton);
         
-        locationListener = new MyLocationListener();
-        
-        lm.requestLocationUpdates(
-        		LocationManager.GPS_PROVIDER,
-        		2000,
-        		10,
-        		locationListener);
+        startButton.setOnClickListener(this);
+        stopButton.setOnClickListener(this);
     }
     
-    private class MyLocationListener implements LocationListener
-    {
-    	
-    	private URI uri = null;	// URI to make the HTTP PUT request to.
-    	
-    	public void onLocationChanged(Location loc) {
-    		if (loc != null) {
-    			// Used for the user notifications, Toast
-    			Context context = getApplicationContext();
-    			int duration = Toast.LENGTH_SHORT;
-
-    			// Generate URL instance
-				try {
-					uri = new URI("http://www.mariazendre.org/hitchhiking/position/");
-				} catch (URISyntaxException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				
-				// Create the json string to PUT to the server
-				JSONObject data = new JSONObject();
-				try {
-					data.put("lat", loc.getLatitude());
-					data.put("lon", loc.getLongitude());
-				} catch (JSONException e) {
-					Toast toast = Toast.makeText(context, "JSON creation failed.", duration);
-					toast.show();
-				}
-
-			    try {
-			    	// Do a HTTP PUT request to post the GPS location to url
-					HttpClient httpclient = new DefaultHttpClient();
-					
-					// Prepare a request object
-				    HttpPut httpput = new HttpPut(uri);
-				    httpput.setEntity(new ByteArrayEntity(data.toString().getBytes()));
-					
-				    // Execute the request
-				    httpclient.execute(httpput);
-
-			    } catch (ClientProtocolException e) {
-		            // TODO Auto-generated catch block
-		            e.printStackTrace();
-				} catch (IOException e) {
-					Toast toast = Toast.makeText(context, "Put failed", duration);
-					toast.show();
-				}
-				Toast toast = Toast.makeText(context, data.toString(), duration);
-    			toast.show();
-    		}
-    	}
-    	public void onProviderDisabled(String provider) {
-    		//TODO
-    	}
-    	public void onProviderEnabled(String provider) {
-    		//TODO
-    	}
-    	public void onStatusChanged(String provider, int status, Bundle extras) {
-    		//TODO
-    	}
-    }
+	@Override
+	public void onClick(View src) {
+		switch(src.getId()) {
+		case R.id.startButton:
+			Log.i(TAG, "startButton pressed");
+			startService(new Intent(this, BeaconService.class));
+			break;
+		case R.id.stopButton:
+			Log.i(TAG, "stopButton pressed");
+			stopService(new Intent(this, BeaconService.class));
+			break;
+		}
+	}
 }
