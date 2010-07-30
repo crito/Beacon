@@ -30,6 +30,7 @@ public class Beacon extends Activity implements OnClickListener {
 	private final String TAG = "Beacon";
 	
 	Button startButton, stopButton;
+	
 	/** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -38,7 +39,7 @@ public class Beacon extends Activity implements OnClickListener {
         setContentView(R.layout.main);
         
         startButton = (Button) findViewById(R.id.startButton);
-        startButton = (Button) findViewById(R.id.stopButton);
+        stopButton = (Button) findViewById(R.id.stopButton);
         
         startButton.setOnClickListener(this);
         stopButton.setOnClickListener(this);

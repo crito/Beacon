@@ -1,18 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="fill_parent" 
               android:layout_height="fill_parent" 
-              android:orientation="vertical" >
-    <TextView android:id="@+id/text"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:text="Hitchhiker" />
-    <Button android:id="@+id/startButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Start" />
-    <Button android:id="@+id/stopButton"
-    		android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Stop" />
-</LinearLayout>
+              android:stretchColumns="1">
+    <TableRow>          
+	    <TextView android:id="@+id/text"
+	    		  android:layout_column="1"
+	              android:text="Hitchhiker" />
+    </TableRow>
+    
+    <View
+        android:layout_height="2dip"
+        android:background="#FF909090" />
+    
+    <TableRow>          
+	    <TextView android:id="@+id/text"
+	    		  android:layout_column="1"
+	              android:text="Put URI:" />
+    </TableRow>
+    <TableRow>
+	    <EditText android:id="@+id/PutUri"
+	    		  android:layout_column="1"
+	    		  android:text="http://mariazendre.org/hitchhiking/position/" />
+    </TableRow>
+    
+    <View
+        android:layout_height="2dip"
+        android:background="#FF909090" />
+    
+    <TableRow>
+    	<TextView android:id="@+id/text"
+    			  android:layout_column="1"
+	              android:text="Interval Milliseconds" />
+	    <EditText android:id="@+id/IntervalMsec"
+	    		  android:gravity="right" 
+	    		  android:text="20000" />
+	</TableRow>
+	<TableRow>
+	   	<TextView android:id="@+id/text"
+	   			  android:layout_column="1"
+	              android:text="Interval Meters" />
+	   	<EditText android:id="@+id/IntervalMeter"
+	    		  android:gravity="right" 
+	    		  android:text="20" />
+    </TableRow>
+    
+    <View
+        android:layout_height="2dip"
+        android:background="#FF909090" />
+    
+    <TableRow>
+	    <Button android:id="@+id/startButton"
+	    		android:layout_column="1"
+	            android:text="Start" />
+	    <Button android:id="@+id/stopButton"
+	    		android:gravity="right" 
+	            android:text="Stop" />
+    </TableRow>
+</TableLayout>

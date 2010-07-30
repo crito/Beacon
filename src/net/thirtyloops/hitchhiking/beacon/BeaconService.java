@@ -48,21 +48,16 @@ public class BeaconService extends Service {
     
 	@Override
 	public void onDestroy() {
-		Context context = getApplicationContext();
-		int duration = Toast.LENGTH_SHORT;
-		Toast toast = Toast.makeText(context, "Destroyed " + TAG, duration);
-		toast.show(); 
+		Toast.makeText(this, "My Service Stopped", Toast.LENGTH_LONG).show();
+		Log.i(TAG, "Service stopped.");
+		lm.removeUpdates(locationListener);
 	}
 	
 	@Override
 	public void onStart(Intent intent, int startId) {
 		super.onStart(intent, startId);
+		Toast.makeText(this, "My Service Started", Toast.LENGTH_LONG).show();
 		Log.i(TAG, "Service started");
-		
-		Context context = getApplicationContext();
-		int duration = Toast.LENGTH_SHORT;
-		Toast toast = Toast.makeText(context, "Started " + TAG, duration);
-		toast.show();
 		
 		try {
     		PutUri = new URI("http://www.mariazendre.org/hitchhiking/position/");
@@ -108,7 +103,7 @@ public class BeaconService extends Service {
 					toast.show();
 				}
 
-			    /*try {
+			    try {
 			    	// Do a HTTP PUT request to post the GPS location to url
 					HttpClient httpclient = new DefaultHttpClient();
 					
@@ -125,7 +120,7 @@ public class BeaconService extends Service {
 				} catch (IOException e) {
 					Toast toast = Toast.makeText(context, "Put failed", duration);
 					toast.show();
-				}*/
+				}
 				Toast toast = Toast.makeText(context, data.toString(), duration);
     			toast.show();
     		}
